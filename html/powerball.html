@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>powerball</title>
+<style>
+body {
+	text-align:center;
+	margin:20px;
+}
+div {
+	margin:20px;
+}
+#winnums {
+	background: url('http://www.powerball.com/images/mnumbers_bg.png');
+	background-repeat: no-repeat;
+	background-position: center;
+	padding:30px;
+}
+.ball {
+	box-sizing:border-box;
+	display:inline-block;
+	width:40px;
+	height:40px;
+	line-height:40px;
+	font-size:16px;
+	font-weight:bold;
+	border-radius:20px;
+	background-color:#FFFFFF;
+}
+.red {
+    background-color:#C31F3A;
+    color:#FFFFFF;
+}
+button {
+	padding:0 40px;
+	line-height:40px;
+	text-align:center;
+	vertical-align:middle;
+	font-size:26px;
+	font-weight:bold;
+	cursor:pointer;
+}
+#result {
+	display:none;
+	line-height:30px;
+}
+#result input {
+	width:200px;
+}
+</style>
+</head>
+<body>
+<div>
+	<a target="_blank" href="http://www.powerball.com/">
+		<img src="http://www.powerball.com/images/pb_logo.png">
+	</a>
+</div>
+
+<div id="winnums">
+	<span id="rnd-1" class="ball"></span>
+	<span id="rnd-2" class="ball"></span>
+	<span id="rnd-3" class="ball"></span>
+	<span id="rnd-4" class="ball"></span>
+	<span id="rnd-5" class="ball"></span>
+	<span id="rnd-6" class="ball red"></span>
+</div>
+
+<div>
+	<button id="btn-go" disabled>...</button>
+</div>
+
+<div id="result">
+	为您选择的号码是 <input type="text">
+	<br>
+	小赌怡情，大赌发家！祝好运 ^_^
+</div>
+
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script>
+function gen()
+{
+	var numbers = [];
+	for (var i=0; i < 5; i++) {
+		numbers.push(Math.floor(Math.random() * 69) + 1);
+	}
+	numbers.sort(function(a, b) {
+		if (a < b) return -1;
+		if (a > b) return 1;
+		return 0;
+	});
+	numbers.push(Math.floor(Math.random() * 26) + 1);
+
+	for (var i=1; i <= 6; i++) {
+		$('#rnd-' + i).text(numbers[i - 1]);
+	}
+
+	$('#result').show();
+	$('#result input').val(numbers.join(',')).select();
+}
+
+$(function() {
+	$('#btn-go')
+		.on('click', gen)
+		.attr('disabled', false)
+		.text('试试手气！');
+});
+</script>
+</body>
+</html>
