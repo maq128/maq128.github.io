@@ -17,6 +17,7 @@ div {
 	background-repeat: no-repeat;
 	background-position: center;
 	padding:30px 0px;
+	height:43px;
 }
 .ball {
 	box-sizing:border-box;
@@ -48,13 +49,14 @@ button {
 }
 #result input {
 	width:200px;
+	text-indent:5px;
 }
 </style>
 </head>
 <body>
 <div>
 	<a target="_blank" href="http://www.powerball.com/">
-		<img src="http://www.powerball.com/images/pb_logo.png">
+		<img src="http://www.powerball.com/images/pb_logo.png" style="width:491px; height:115px">
 	</a>
 </div>
 
@@ -68,7 +70,7 @@ button {
 </div>
 
 <div>
-	<button id="btn-go" disabled>...</button>
+	<button id="btn-go" disabled>请稍候...</button>
 </div>
 
 <div id="result">
@@ -82,9 +84,11 @@ button {
 function gen()
 {
 	var numbers = [];
-	for (var i=0; i < 5; i++) {
-		numbers.push(Math.floor(Math.random() * 69) + 1);
-	}
+	do {
+		var v = Math.floor(Math.random() * 69) + 1;
+		if (numbers.indexOf(v) >= 0) continue;
+		numbers.push(v);
+	} while (numbers.length < 5);
 	numbers.sort(function(a, b) {
 		if (a < b) return -1;
 		if (a > b) return 1;
